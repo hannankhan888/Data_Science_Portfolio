@@ -1,2 +1,5 @@
 # for jupyter notebook checkpoints
 *.ipynb_checkpoints
+
+# for RStudio
+.Rproj.user
