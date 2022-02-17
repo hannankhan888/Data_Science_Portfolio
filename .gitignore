@@ -3,3 +3,5 @@
 
 # for RStudio
 .Rproj.user
+.Rproj
+.RData
