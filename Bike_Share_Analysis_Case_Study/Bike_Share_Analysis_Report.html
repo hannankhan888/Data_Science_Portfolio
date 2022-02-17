@@ -622,6 +622,111 @@ In terms of how this data will help us answer the business task, we will need to
 </div>
 <div id="data-preparation-processing" class="section level2">
 <h2>Data Preparation-Processing</h2>
+<p>We should create a column with <code>ride_length</code> in seconds, so we can see how long each ride lasted:</p>
+<pre class="r"><code>df &lt;- df %&gt;%
+  mutate(ride_length = as.numeric(difftime(ended_at,started_at,units=&quot;secs&quot;),
+                                  units=&quot;secs&quot;))</code></pre>
+<p>We can also create a <code>weekday</code> value for our analysis:</p>
+<pre class="r"><code>df &lt;- df %&gt;%
+  mutate(weekday = weekdays(df$started_at))</code></pre>
+<p>Lastly, in order to prepare our data fully, we can include a column for the time of day. This is subjective, however, according to the English definitions of times of day, we get the following:</p>
+<pre class="r"><code># we can find the starting time of day for each ride (morning, afternoon, evening):
+# {
+#   morning:    00:00:00-11:59:59
+#   afternoon:  12:00:00-17:59:59
+#   evening:    18:00:00-23:59:59
+# }
+# src: https://stackoverflow.com/questions/62419598/r-convert-time-to-time-of-day
+get_time_of_day &lt;- function(start_time) {
+  hour_time &lt;- hour(start_time)
+  case_when(hour_time &gt;= 0 &amp; hour_time &lt;= 11 ~ &#39;morning&#39;,
+            hour_time &gt;= 12 &amp; hour_time &lt;= 17 ~ &#39;afternoon&#39;,
+            hour_time &gt;= 18 &amp; hour_time &lt;= 23 ~ &#39;evening&#39;)
+}
+df &lt;- df %&gt;%
+  mutate(time_of_day = get_time_of_day(started_at))</code></pre>
+<p>Since the last function’s application can insert null values, lets take a peek at our data again:</p>
+<pre class="r"><code>sapply(df, class)</code></pre>
+<pre><code>## $index
+## [1] &quot;numeric&quot;
+## 
+## $ride_id
+## [1] &quot;character&quot;
+## 
+## $rideable_type
+## [1] &quot;character&quot;
+## 
+## $started_at
+## [1] &quot;POSIXct&quot; &quot;POSIXt&quot; 
+## 
+## $ended_at
+## [1] &quot;POSIXct&quot; &quot;POSIXt&quot; 
+## 
+## $start_station_name
+## [1] &quot;character&quot;
+## 
+## $start_station_id
+## [1] &quot;character&quot;
+## 
+## $end_station_name
+## [1] &quot;character&quot;
+## 
+## $end_station_id
+## [1] &quot;character&quot;
+## 
+## $start_lat
+## [1] &quot;numeric&quot;
+## 
+## $start_lng
+## [1] &quot;numeric&quot;
+## 
+## $end_lat
+## [1] &quot;numeric&quot;
+## 
+## $end_lng
+## [1] &quot;numeric&quot;
+## 
+## $member_casual
+## [1] &quot;character&quot;
+## 
+## $ride_length
+## [1] &quot;numeric&quot;
+## 
+## $weekday
+## [1] &quot;character&quot;
+## 
+## $time_of_day
+## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>str(df)</code></pre>
+<pre><code>## tibble [4,588,302 x 17] (S3: tbl_df/tbl/data.frame)
+##  $ index             : num [1:4588302] 9 10 11 12 13 14 15 16 17 18 ...
+##  $ ride_id           : chr [1:4588302] &quot;B9F73448DFBE0D45&quot; &quot;457C7F4B5D3DA135&quot; &quot;57C750326F9FDABE&quot; &quot;4D518C65E338D070&quot; ...
+##  $ rideable_type     : chr [1:4588302] &quot;classic_bike&quot; &quot;electric_bike&quot; &quot;electric_bike&quot; &quot;electric_bike&quot; ...
+##  $ started_at        : POSIXct[1:4588302], format: &quot;2021-01-24 19:15:38&quot; &quot;2021-01-23 12:57:38&quot; ...
+##  $ ended_at          : POSIXct[1:4588302], format: &quot;2021-01-24 19:22:51&quot; &quot;2021-01-23 13:02:10&quot; ...
+##  $ start_station_name: chr [1:4588302] &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; ...
+##  $ start_station_id  : chr [1:4588302] &quot;17660&quot; &quot;17660&quot; &quot;17660&quot; &quot;17660&quot; ...
+##  $ end_station_name  : chr [1:4588302] &quot;Wood St &amp; Augusta Blvd&quot; &quot;California Ave &amp; North Ave&quot; &quot;Wood St &amp; Augusta Blvd&quot; &quot;Wood St &amp; Augusta Blvd&quot; ...
+##  $ end_station_id    : chr [1:4588302] &quot;657&quot; &quot;13258&quot; &quot;657&quot; &quot;657&quot; ...
+##  $ start_lat         : num [1:4588302] 41.9 41.9 41.9 41.9 41.9 ...
+##  $ start_lng         : num [1:4588302] -87.7 -87.7 -87.7 -87.7 -87.7 ...
+##  $ end_lat           : num [1:4588302] 41.9 41.9 41.9 41.9 41.9 ...
+##  $ end_lng           : num [1:4588302] -87.7 -87.7 -87.7 -87.7 -87.7 ...
+##  $ member_casual     : chr [1:4588302] &quot;member&quot; &quot;member&quot; &quot;casual&quot; &quot;casual&quot; ...
+##  $ ride_length       : num [1:4588302] 433 272 587 537 609 ...
+##  $ weekday           : chr [1:4588302] &quot;Sunday&quot; &quot;Saturday&quot; &quot;Saturday&quot; &quot;Saturday&quot; ...
+##  $ time_of_day       : chr [1:4588302] &quot;evening&quot; &quot;afternoon&quot; &quot;afternoon&quot; &quot;afternoon&quot; ...</code></pre>
+<pre class="r"><code>colSums(is.na.data.frame(df))</code></pre>
+<pre><code>##              index            ride_id      rideable_type         started_at 
+##                  0                  0                  0                  0 
+##           ended_at start_station_name   start_station_id   end_station_name 
+##                  0                  0                  0                  0 
+##     end_station_id          start_lat          start_lng            end_lat 
+##                  0                  0                  0                  0 
+##            end_lng      member_casual        ride_length            weekday 
+##                  0                  0                  0                  0 
+##        time_of_day 
+##                  0</code></pre>
 </div>
 <div id="analysis" class="section level2">
 <h2>Analysis</h2>
