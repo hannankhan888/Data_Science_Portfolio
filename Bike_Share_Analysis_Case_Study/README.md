@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Google Data Analytics Professional Certificate Capstone Project:
 
 # Analysis Of Bike-Share Customers
