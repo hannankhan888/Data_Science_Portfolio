@@ -128,6 +128,7 @@ colSums(is.na.data.frame(df))
 # Now we are at the analysis/visualization portion of our report.
 ordered_weekdays <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                       "Friday", "Saturday")
+library(scales)
 # First, we can compute basic statistics about each of our member types.
 # src: https://www.tutorialspoint.com/r/r_mean_median_mode.htm
 mode_calc <- function (v) {
@@ -141,15 +142,19 @@ df %>%
             mean_ride_len_m = mean(ride_length)/60,
             max_ride_len_s = max(ride_length),
             max_ride_len_m = max(ride_length)/60,
-            most_common_wkday = mode_calc(weekday))
+            most_common_wkday = mode_calc(weekday)) %>%
+  datatable() %>%
+  formatRound(c("mean_ride_len_s", "mean_ride_len_m", "max_ride_len_m"), 1)
 
 # calculate most common days of week by member type:
 # (number of rides per day by member type)
 df %>%
   group_by(member_casual, weekday) %>%
   summarize(observations = n()) %>%
-  pivot_wider(names_from = weekday, values_from = observations)
-# lets create a visualization for that
+  pivot_wider(names_from = weekday, values_from = observations) %>%
+  select(ordered_weekdays) %>%
+  datatable()
+
 ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
   geom_bar() +
   facet_wrap(~member_casual) +
@@ -157,6 +162,7 @@ ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
        y = "Count",
        title = "Number Of Rides Per Day By Member Type") +
   scale_x_discrete(limits = ordered_weekdays) +
+  scale_y_continuous(labels = label_number_si()) +
   scale_fill_brewer(name = "Rideable Type", labels = c("Classic Bike", "Docked Bike", "Electric Bike"),
                     palette = "Blues") +
   theme_minimal() +
@@ -166,7 +172,10 @@ ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
 df %>%
   group_by(member_casual, weekday) %>%
   summarize(avg_ride_len = mean(ride_length)) %>%
-  pivot_wider(names_from = weekday, values_from = avg_ride_len)
+  pivot_wider(names_from = weekday, values_from = avg_ride_len) %>%
+  select(ordered_weekdays) %>%
+  datatable() %>%
+  formatRound(ordered_weekdays, 1)
 
 ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
   geom_bar(stat = "summary", fun = "mean", fill = "#3288bd") +
@@ -175,6 +184,7 @@ ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
        y = "Average Ride Length",
        title = "Average Ride Length By Weekday Based On Member Type") +
   scale_x_discrete(limits = ordered_weekdays) +
+  scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45),
         legend.position = "none")
@@ -183,20 +193,22 @@ ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
 df %>%
   group_by(member_casual, time_of_day) %>%
   summarize(observations = n()) %>%
-  pivot_wider(names_from = time_of_day, values_from = observations)
+  pivot_wider(names_from = time_of_day, values_from = observations) %>%
+  select(c("morning", "afternoon", "evening")) %>%
+  datatable()
 
 ggplot(df, mapping = aes(x = time_of_day)) +
-  geom_bar() +
+  geom_bar(fill = "#3288bd") +
   facet_wrap(~member_casual) +
-  scale_x_discrete(limits = c("morning", "afternoon", "evening"))
+  labs(x = "Time Of Day",
+       y = "Count",
+       title = "Time Of Day Based On Member Type") +
+  scale_x_discrete(limits = c("morning", "afternoon", "evening")) +
+  scale_y_continuous(labels = label_number_si()) +
+  theme_minimal()
 
-
-
-
-
-# TODO: Make sure all old plots in the report are up to date with the r script.
-
-
+install.packages('DT')
+library(DT)
 
 
 

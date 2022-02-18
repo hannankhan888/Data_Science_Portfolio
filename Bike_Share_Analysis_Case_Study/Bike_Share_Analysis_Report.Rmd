@@ -1,46 +1,54 @@
 ---
-title: "Bike_Share_Analysis_Report"
+title: "Bike Share Analysis Report"
 author: "Hannan Khan"
-date: "2/16/2022"
-output: html_document
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: cerulean
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+  pdf_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Report Outline
-
--   [Current Status](#current-status)
--   [Business Task](#business-task)
--   [Data Sources](#data-sources)
--   [Data Cleaning](#data-cleaning)
--   [Data Preparation-Processing](#data-preparation-processing)
--   [Analysis](#analysis)
--   [Actions](#actions)
--   [Appendix](#appendix)
-
 ## Current Status {#current-status}
 
-The company `Cyclistic` offers a bike-share service to a network of 692 stations in Chicago. There are three types of pricing plans:
+The company `Cyclistic` offers a bike-share service to a network of 692
+stations in Chicago. There are three types of pricing plans:
 
 -   single-ride pass
 -   full-day pass
 -   annual membership
 
-**Casual riders:** customers who use single-ride or full-day passes.  
+**Casual riders:** customers who use single-ride or full-day passes.\
 **Annual members:** customers who purchase annual memberships.
 
-Finance analysts at `Cyclistic` have determined that annual members are more profitable than casual riders.
+Finance analysts at `Cyclistic` have determined that annual members are
+more profitable than casual riders.
 
 ## Business Task {#business-task}
 
-The current goal of `Cyclistic` is to develop marketing strategies that will convert casual riders into annual members. In order for that to happen, *the marketing team needs to understand how casual riders differ from annual members.*\
-**This report analyzes how casual riders and annual members use Cyclistic bikes differently using data from last year, 2021.**
+The current goal of `Cyclistic` is to develop marketing strategies that
+will convert casual riders into annual members. In order for that to
+happen, *the marketing team needs to understand how casual riders differ
+from annual members.*\
+**This report analyzes how casual riders and annual members use
+Cyclistic bikes differently using data from last year, 2021.**
 
 ## Data Sources {#data-sources}
 
-The data is publicly available [here](https://ride.divvybikes.com/system-data) from the source company Divvy, designated as `Cyclistic` in this report. The data is provided under this [license](https://ride.divvybikes.com/data-license-agreement). The data is provided by the month, and contains anonymized information about:
+The data is publicly available
+[here](https://ride.divvybikes.com/system-data) from the source company
+Divvy, designated as `Cyclistic` in this report. The data is provided
+under this
+[license](https://ride.divvybikes.com/data-license-agreement). The data
+is provided by the month, and contains anonymized information about:
 
 -   Trip start datetime
 -   Trip end datetime
@@ -55,28 +63,35 @@ The dataset in question is:
 
 -   *Reliable*: From the source company `Cyclistic` itself.
 -   *Original*: This is novel data.
--   *Comprehensive*: This data covers enough features for us to analyze how casual riders and annual members differ.
+-   *Comprehensive*: This data covers enough features for us to analyze
+    how casual riders and annual members differ.
 -   *Current*: Covers the previous year, 2021.
 -   *Cited*: see [Data Sources](#data-sources)
 
 ## Data Cleaning {#data-cleaning}
 
-The data was concatenated using [this](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/data_concatenation.ipynb) Jupyter Notebook.
+The data was concatenated using
+[this](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/data_concatenation.ipynb)
+Jupyter Notebook.
 
-```{r loading libraries, results = 'hide'}
+```{r loading libraries, include=FALSE}
 library(tidyverse)
 library(janitor)
 library(lubridate)
+library(scales)
+library(DT)
 ```
 
-Since the 2021 data is now all in one file, we can load it and take a peek at its structure:
+Since the 2021 data is now all in one file, we can load it and take a
+peek at its structure:
 
 ```{r loading dataset}
 df <- read_csv("D:\\Datasets\\Divvy_Trips_Data\\Divvy_Trips_2021\\2021_all_data.csv")
 str(df)
 ```
 
-We rename the "...1" column and make sure that all columns have consistent nomenclature:
+We rename the "...1" column and make sure that all columns have
+consistent nomenclature:
 
 ```{r renaming columns}
 df <- rename(df, index = "...1")
@@ -102,7 +117,8 @@ We look at null values for our data frame by column:
 colSums(is.na.data.frame(df))
 ```
 
-We have a lot of null values in certain columns. Let's get rid of the values in the largest column (end_station_name):
+We have a lot of null values in certain columns. Let's get rid of the
+values in the largest column (end_station_name):
 
 ```{r removing null values}
 df <- drop_na(df, end_station_name)
@@ -121,7 +137,9 @@ colSums(is.na.data.frame(df))
 ```
 
 Great! Now the data frame is free of null values.\
-We can proceed to check for duplicates in the data. Since the ride_id is a primary key, we can use that to see if we have any duplicates in our data:
+We can proceed to check for duplicates in the data. Since the ride_id is
+a primary key, we can use that to see if we have any duplicates in our
+data:
 
 ```{r checking for duplicates}
 get_dupes(df, ride_id)
@@ -135,12 +153,16 @@ Now our data is:
 -   Free of duplicates
 
 The steps taken above verify the dataset's integrity.\
-In terms of bias, this does not seem to be an issue with the dataset. All bike rides are included (except those taken by service staff as they would skew the data), and each ride is anonymized.\
-In terms of how this data will help us answer the business task, we will need to engineer some new features in the next section.
+In terms of bias, this does not seem to be an issue with the dataset.
+All bike rides are included (except those taken by service staff as they
+would skew the data), and each ride is anonymized.\
+In terms of how this data will help us answer the business task, we will
+need to engineer some new features in the next section.
 
 ## Data Preparation-Processing {#data-preparation-processing}
 
-We should create a column with `ride_length` in seconds, so we can see how long each ride lasted:
+We should create a column with `ride_length` in seconds, so we can see
+how long each ride lasted:
 
 ```{r creating ride length column}
 df <- df %>%
@@ -155,7 +177,9 @@ df <- df %>%
   mutate(weekday = weekdays(df$started_at))
 ```
 
-Lastly, in order to prepare our data fully, we can include a column for the time of day. This is subjective, however, according to the English definitions of times of day, we get the following:
+Lastly, in order to prepare our data fully, we can include a column for
+the time of day. This is subjective, however, according to the English
+definitions of times of day, we get the following:
 
 ```{r creating time_of_day column}
 # we can find the starting time of day for each ride (morning, afternoon, evening):
@@ -175,17 +199,22 @@ df <- df %>%
   mutate(time_of_day = get_time_of_day(started_at))
 ```
 
-Since the last function's application can insert null values, lets take a peek at our data again:
+Since the last function's application can insert null values, lets take
+a peek at our data again:
 
 ```{r checking final data}
-sapply(df, class)
 str(df)
 colSums(is.na.data.frame(df))
 ```
 
 ## Analysis {#analysis}
+
 Here are some basic statistics about our member types:
+
 ```{r basic statistics table}
+ordered_weekdays <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+                      "Friday", "Saturday")
+
 # src: https://www.tutorialspoint.com/r/r_mean_median_mode.htm
 mode_calc <- function (v) {
   uniqv <- unique(v)
@@ -198,21 +227,29 @@ df %>%
             mean_ride_len_m = mean(ride_length)/60,
             max_ride_len_s = max(ride_length),
             max_ride_len_m = max(ride_length)/60,
-            most_common_wkday = mode_calc(weekday))
+            most_common_wkday = mode_calc(weekday)) %>%
+  datatable() %>%
+  formatRound(c("mean_ride_len_s", "mean_ride_len_m", "max_ride_len_m"), 1)
 ```
+
 From this table, we can conclude the following:
 
-* Annual members have higher usage overall (already confirmed by finance analysts).
-* Casual members ride for a longer average time per ride.
-* Maximum ride time is significantly higher for casual members.
-* Weekday matters to the member type.
+-   Annual members have higher usage overall (already confirmed by
+    finance analysts).
+-   Casual members ride for a longer average time per ride.
+-   Maximum ride time is significantly higher for casual members.
+-   Weekday matters to the member type.
 
-Since weekday matters to the member type, we will investigate further. Let's calculate the most common days of the week by member type:
+Since weekday matters to the member type, we will investigate further.
+Let's calculate the most common days of the week by member type:
+
 ```{r days of week by member type}
 df %>%
   group_by(member_casual, weekday) %>%
   summarize(observations = n()) %>%
-  pivot_wider(names_from = weekday, values_from = observations)
+  pivot_wider(names_from = weekday, values_from = observations) %>%
+  select(ordered_weekdays) %>%
+  datatable()
 
 ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
   geom_bar() +
@@ -220,55 +257,119 @@ ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
   labs(x = "Weekday",
        y = "Count",
        title = "Number Of Rides Per Day By Member Type") +
+  scale_x_discrete(limits = ordered_weekdays) +
+  scale_y_continuous(labels = label_number_si()) +
   scale_fill_brewer(name = "Rideable Type", labels = c("Classic Bike", "Docked Bike", "Electric Bike"),
                     palette = "Blues") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45))
 ```
+
 From this visualization, we can conclude:
 
-* Annual members do not significantly use docked bikes.
-* Casual rider usage peaks on weekends.
-* Annual members use bikes throughout the week.
-* Classic and electric bikes are the most common for both casual riders and annual members.
+-   Annual members do not significantly use docked bikes.
+-   Casual rider usage peaks on weekends.
+-   Annual members use bikes throughout the week.
+-   Classic and electric bikes are the most common for both casual
+    riders and annual members.
+-   Both member types use classic bikes most.
 
 Let's see how this correlates to the average ride length by day:
+
 ```{r ride length by day}
 df %>%
   group_by(member_casual, weekday) %>%
   summarize(avg_ride_len = mean(ride_length)) %>%
-  pivot_wider(names_from = weekday, values_from = avg_ride_len)
+  pivot_wider(names_from = weekday, values_from = avg_ride_len) %>%
+  select(ordered_weekdays) %>%
+  datatable() %>%
+  formatRound(ordered_weekdays, 1)
 
 ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
-  geom_bar(stat = "summary", fun = "mean", fill = "#3182bd") +
+  geom_bar(stat = "summary", fun = "mean", fill = "#3288bd") +
   facet_wrap(~member_casual) +
   labs(x = "Weekday",
        y = "Average Ride Length",
        title = "Average Ride Length By Weekday Based On Member Type") +
+  scale_x_discrete(limits = ordered_weekdays) +
+  scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45),
         legend.position = "none")
 ```
+
 The above chart has taught us:
 
-* Casual riders have 2x average ride length of annual members.
+-   Casual riders have 2x average ride length of annual members.
 
-What about the number of rides by day?
+We can also look at common times of day for each member type:
 
+```{r time of day}
+df %>%
+  group_by(member_casual, time_of_day) %>%
+  summarize(observations = n()) %>%
+  pivot_wider(names_from = time_of_day, values_from = observations) %>%
+  select(c("morning", "afternoon", "evening")) %>%
+  datatable()
 
+ggplot(df, mapping = aes(x = time_of_day)) +
+  geom_bar(fill = "#3288bd") +
+  facet_wrap(~member_casual) +
+  labs(x = "Time Of Day",
+       y = "Count",
+       title = "Time Of Day Based On Member Type") +
+  scale_x_discrete(limits = c("morning", "afternoon", "evening")) +
+  scale_y_continuous(labels = label_number_si()) +
+  theme_minimal()
+```
+
+We learn the following from the above chart:
+
+-   Both members types go on afternoon rides most often.
+
+### Analysis Summary
+
+-   Annual members have higher usage overall (already confirmed by
+    finance analysts).
+-   Casual members ride for a longer average time per ride.
+-   Maximum ride time is significantly higher for casual members.
+-   Weekday matters to the member type.
+-   Annual members do not significantly use docked bikes.
+-   Casual rider usage peaks on weekends.
+-   Annual members use bikes throughout the week.
+-   Classic and electric bikes are the most common for both casual
+    riders and annual members.
+-   Both member types use classic bikes most.
+-   Casual riders have 2x average ride length of annual members.
+-   Both members types go on afternoon rides most often.  
+-   Annual members are probably using bikes for commute purposes.
+
+We can see that bike usage differs vastly between annual members and casual riders. It seems as if casual riders are using the bikes for fun (usage peak at weekends), while annual members have more uniform usage throughout the week. On possible explanation is that annual members are using the bikes for commute purposes, which would explain their uniform average ride length and usage in morning/afternoon times.  
+In terms of similarity between the two groups, we see that classic bikes are used far more than electric or docked bikes. We also see that both member types go on afternoon rides most often.
 
 ## Actions {#actions}
+Based on the above analysis, here are my top three recommendations for the marketing team:
+
+  1. Target ads temporally. Casual riders should get ads pre-weekend, perhaps Thursday or Friday.
+  2. Casual riders should have ads that emphasize the utility of this service. The goal here would be to change their thinking on the use of the bikes (for commute instead of just fun).
+  3. Casual riders should also have ads that emphasize using bikes during the day (morning and afternoon), since they currently use them during the afternoon and evening.
 
 ## Appendix {#appendix}
+
 ### Definitions
+
 **Annual members:** customers who purchase annual memberships.  
 **Casual riders:** customers who use single-ride or full-day passes.  
-**Docked bikes:** bikes that are borrowed from and returned to docking stations (docks). They can be returned to a different station.
-**Dockless bikes:** bikes that do not require a docking station. These are typically parked within the bike share district at a bike rack or on the sidewalk.
-**Electric bikes:** a motorized bicycle.
+**Docked bikes:** bikes that are borrowed from and returned to docking
+stations (docks). They can be returned to a different station.  
+**Dockless bikes:** bikes that do not require a docking station. These
+are typically parked within the bike share district at a bike rack or on
+the sidewalk.  
+**Electric bikes:** a motorized bicycle.  
+
 ### Files Used
-| Description                                   |                                                                               File                                                                                |
-|:----------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| Jupyter notebook used for data concatenation. |       [data_concatenation.ipynb](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/data_concatenation.ipynb)       |
-| General analysis/scratch file script.         |          [Bike_Share_Analysis.R](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/Bike_Share_Analysis.R)          |
-| This report in R markdown notebook format.    | [Bike_Share_Analysis_Report.Rmd](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/Bike_Share_Analysis_Report.Rmd) |
+| Description | File |
+|:---------|:---------:|
+| Jupyter notebook used for data concatenation. | [data_concatenation.ipynb](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/data_concatenation.ipynb) |
+| General analysis/scratch file script. | [Bike_Share_Analysis.R](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/Bike_Share_Analysis.R) |
+| This report in R markdown notebook format. | [Bike_Share_Analysis_Report.Rmd](https://github.com/hannankhan888/Data_Science_Portfolio/blob/main/Bike_Share_Analysis_Case_Study/Bike_Share_Analysis_Report.Rmd) |
