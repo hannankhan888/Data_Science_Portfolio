@@ -1,0 +1,312 @@
+CREATE TABLE IF NOT EXISTS dailyActivity_merged (
+Id INT NOT NULL,
+ActivityDate DATE NOT NULL,
+TotalSteps INT NOT NULL,
+TotalDistance DEC(5,5) NOT NULL,
+TrackerDistance DEC(5,5) NOT NULL,
+LoggedActivitiesDistance DEC(5,5) NOT NULL,
+VeryActiveDistance DEC(5,5) NOT NULL,
+ModeratelyActiveDistance DEC(5,5) NOT NULL,
+LightActiveDistance DEC(5,5) NOT NULL,
+SedentaryActiveDistance DEC(5,5) NOT NULL,
+VeryActiveMinutes INT NOT NULL,
+FairlyActiveMinutes INT NOT NULL,
+LightlyActiveMinutes INT NOT NULL,
+SedentaryMinutes INT NOT NULL,
+Calories INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS dailyCalories_merged (
+Id INT NOT NULL,
+ActivityDay DATE NOT NULL,
+Calories INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS dailyIntensities_merged (
+Id INT NOT NULL,
+ActivityDay DATE NOT NULL,
+SedentaryMinutes INT NOT NULL,
+LightlyActiveMinutes INT NOT NULL,
+FairlyActiveMinutes INT NOT NULL,
+VeryActiveMinutes INT NOT NULL,
+SedentaryActiveDistance DEC(5,5) NOT NULL,
+LightActiveDistance DEC(5,5) NOT NULL,
+ModeratelyActiveDistance DEC(5,5) NOT NULL,
+VeryActiveDistance DEC(5,5) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS dailySteps_merged (
+Id INT NOT NULL,
+ActivityDay DATE NOT NULL,
+StepTotal INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS heartrate_seconds_merged (
+Id INT NOT NULL,
+Time DATETIME NOT NULL,
+Value INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS hourlyCalories_merged (
+Id INT NOT NULL,
+ActivityHour DATETIME NOT NULL,
+Calories INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS hourlyIntensities_merged (
+Id INT NOT NULL,
+ActivityHour DATETIME NOT NULL,
+TotalIntensity INT NOT NULL,
+AverageIntensity DEC(5,5) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS hourlySteps_merged (
+Id INT NOT NULL,
+ActivityHour DATETIME NOT NULL,
+StepTotal INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteCaloriesNarrow_merged (
+Id INT NOT NULL,
+ActivityMinute DATETIME NOT NULL,
+Calories DEC(5,5) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteCaloriesWide_merged (
+Id INT NOT NULL,
+ActivityHour DATETIME NOT NULL,
+Calories00 DEC(5,5) NOT NULL,
+Calories01 DEC(5,5) NOT NULL,
+Calories02 DEC(5,5) NOT NULL,
+Calories03 DEC(5,5) NOT NULL,
+Calories04 DEC(5,5) NOT NULL,
+Calories05 DEC(5,5) NOT NULL,
+Calories06 DEC(5,5) NOT NULL,
+Calories07 DEC(5,5) NOT NULL,
+Calories08 DEC(5,5) NOT NULL,
+Calories09 DEC(5,5) NOT NULL,
+Calories10 DEC(5,5) NOT NULL,
+Calories11 DEC(5,5) NOT NULL,
+Calories12 DEC(5,5) NOT NULL,
+Calories13 DEC(5,5) NOT NULL,
+Calories14 DEC(5,5) NOT NULL,
+Calories15 DEC(5,5) NOT NULL,
+Calories16 DEC(5,5) NOT NULL,
+Calories17 DEC(5,5) NOT NULL,
+Calories18 DEC(5,5) NOT NULL,
+Calories19 DEC(5,5) NOT NULL,
+Calories20 DEC(5,5) NOT NULL,
+Calories21 DEC(5,5) NOT NULL,
+Calories22 DEC(5,5) NOT NULL,
+Calories23 DEC(5,5) NOT NULL,
+Calories24 DEC(5,5) NOT NULL,
+Calories25 DEC(5,5) NOT NULL,
+Calories26 DEC(5,5) NOT NULL,
+Calories27 DEC(5,5) NOT NULL,
+Calories28 DEC(5,5) NOT NULL,
+Calories29 DEC(5,5) NOT NULL,
+Calories30 DEC(5,5) NOT NULL,
+Calories31 DEC(5,5) NOT NULL,
+Calories32 DEC(5,5) NOT NULL,
+Calories33 DEC(5,5) NOT NULL,
+Calories34 DEC(5,5) NOT NULL,
+Calories35 DEC(5,5) NOT NULL,
+Calories36 DEC(5,5) NOT NULL,
+Calories37 DEC(5,5) NOT NULL,
+Calories38 DEC(5,5) NOT NULL,
+Calories39 DEC(5,5) NOT NULL,
+Calories40 DEC(5,5) NOT NULL,
+Calories41 DEC(5,5) NOT NULL,
+Calories42 DEC(5,5) NOT NULL,
+Calories43 DEC(5,5) NOT NULL,
+Calories44 DEC(5,5) NOT NULL,
+Calories45 DEC(5,5) NOT NULL,
+Calories46 DEC(5,5) NOT NULL,
+Calories47 DEC(5,5) NOT NULL,
+Calories48 DEC(5,5) NOT NULL,
+Calories49 DEC(5,5) NOT NULL,
+Calories50 DEC(5,5) NOT NULL,
+Calories51 DEC(5,5) NOT NULL,
+Calories52 DEC(5,5) NOT NULL,
+Calories53 DEC(5,5) NOT NULL,
+Calories54 DEC(5,5) NOT NULL,
+Calories55 DEC(5,5) NOT NULL,
+Calories56 DEC(5,5) NOT NULL,
+Calories57 DEC(5,5) NOT NULL,
+Calories58 DEC(5,5) NOT NULL,
+Calories59 DEC(5,5) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteIntensitiesNarrow_merged (
+Id INT NOT NULL,
+ActivityMinute DATETIME NOT NULL,
+Intensity INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteIntensitiesWide_merged (
+Id INT NOT NULL,
+ActivityHour DATETIME NOT NULL,
+Intensity00 INT NOT NULL,
+Intensity01 INT NOT NULL,
+Intensity02 INT NOT NULL,
+Intensity03 INT NOT NULL,
+Intensity04 INT NOT NULL,
+Intensity05 INT NOT NULL,
+Intensity06 INT NOT NULL,
+Intensity07 INT NOT NULL,
+Intensity08 INT NOT NULL,
+Intensity09 INT NOT NULL,
+Intensity10 INT NOT NULL,
+Intensity11 INT NOT NULL,
+Intensity12 INT NOT NULL,
+Intensity13 INT NOT NULL,
+Intensity14 INT NOT NULL,
+Intensity15 INT NOT NULL,
+Intensity16 INT NOT NULL,
+Intensity17 INT NOT NULL,
+Intensity18 INT NOT NULL,
+Intensity19 INT NOT NULL,
+Intensity20 INT NOT NULL,
+Intensity21 INT NOT NULL,
+Intensity22 INT NOT NULL,
+Intensity23 INT NOT NULL,
+Intensity24 INT NOT NULL,
+Intensity25 INT NOT NULL,
+Intensity26 INT NOT NULL,
+Intensity27 INT NOT NULL,
+Intensity28 INT NOT NULL,
+Intensity29 INT NOT NULL,
+Intensity30 INT NOT NULL,
+Intensity31 INT NOT NULL,
+Intensity32 INT NOT NULL,
+Intensity33 INT NOT NULL,
+Intensity34 INT NOT NULL,
+Intensity35 INT NOT NULL,
+Intensity36 INT NOT NULL,
+Intensity37 INT NOT NULL,
+Intensity38 INT NOT NULL,
+Intensity39 INT NOT NULL,
+Intensity40 INT NOT NULL,
+Intensity41 INT NOT NULL,
+Intensity42 INT NOT NULL,
+Intensity43 INT NOT NULL,
+Intensity44 INT NOT NULL,
+Intensity45 INT NOT NULL,
+Intensity46 INT NOT NULL,
+Intensity47 INT NOT NULL,
+Intensity48 INT NOT NULL,
+Intensity49 INT NOT NULL,
+Intensity50 INT NOT NULL,
+Intensity51 INT NOT NULL,
+Intensity52 INT NOT NULL,
+Intensity53 INT NOT NULL,
+Intensity54 INT NOT NULL,
+Intensity55 INT NOT NULL,
+Intensity56 INT NOT NULL,
+Intensity57 INT NOT NULL,
+Intensity58 INT NOT NULL,
+Intensity59 INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteMETsNarrow_merged (
+Id INT NOT NULL,
+ActivityMinute DATETIME NOT NULL,
+METs INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteSleep_merged (
+Id INT NOT NULL,
+date DATE NOT NULL,
+value INT NOT NULL,
+logId INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteStepsNarrow_merged (
+Id INT NOT NULL,
+ActivityMinute DATETIME NOT NULL,
+Steps INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minuteStepsWide_merged (
+Id INT NOT NULL,
+ActivityHour DATETIME NOT NULL,
+Steps00 INT NOT NULL,
+Steps01 INT NOT NULL,
+Steps02 INT NOT NULL,
+Steps03 INT NOT NULL,
+Steps04 INT NOT NULL,
+Steps05 INT NOT NULL,
+Steps06 INT NOT NULL,
+Steps07 INT NOT NULL,
+Steps08 INT NOT NULL,
+Steps09 INT NOT NULL,
+Steps10 INT NOT NULL,
+Steps11 INT NOT NULL,
+Steps12 INT NOT NULL,
+Steps13 INT NOT NULL,
+Steps14 INT NOT NULL,
+Steps15 INT NOT NULL,
+Steps16 INT NOT NULL,
+Steps17 INT NOT NULL,
+Steps18 INT NOT NULL,
+Steps19 INT NOT NULL,
+Steps20 INT NOT NULL,
+Steps21 INT NOT NULL,
+Steps22 INT NOT NULL,
+Steps23 INT NOT NULL,
+Steps24 INT NOT NULL,
+Steps25 INT NOT NULL,
+Steps26 INT NOT NULL,
+Steps27 INT NOT NULL,
+Steps28 INT NOT NULL,
+Steps29 INT NOT NULL,
+Steps30 INT NOT NULL,
+Steps31 INT NOT NULL,
+Steps32 INT NOT NULL,
+Steps33 INT NOT NULL,
+Steps34 INT NOT NULL,
+Steps35 INT NOT NULL,
+Steps36 INT NOT NULL,
+Steps37 INT NOT NULL,
+Steps38 INT NOT NULL,
+Steps39 INT NOT NULL,
+Steps40 INT NOT NULL,
+Steps41 INT NOT NULL,
+Steps42 INT NOT NULL,
+Steps43 INT NOT NULL,
+Steps44 INT NOT NULL,
+Steps45 INT NOT NULL,
+Steps46 INT NOT NULL,
+Steps47 INT NOT NULL,
+Steps48 INT NOT NULL,
+Steps49 INT NOT NULL,
+Steps50 INT NOT NULL,
+Steps51 INT NOT NULL,
+Steps52 INT NOT NULL,
+Steps53 INT NOT NULL,
+Steps54 INT NOT NULL,
+Steps55 INT NOT NULL,
+Steps56 INT NOT NULL,
+Steps57 INT NOT NULL,
+Steps58 INT NOT NULL,
+Steps59 INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sleepDay_merged (
+Id INT NOT NULL,
+SleepDay DATETIME NOT NULL,
+TotalSleepRecords INT NOT NULL,
+TotalMinutesAsleep INT NOT NULL,
+TotalTimeInBed INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS weightLogInfo_merged (
+Id INT NOT NULL,
+Date DATETIME NOT NULL,
+WeightKg DEC(5,5) NOT NULL,
+WeightPounds DEC(5,5) NOT NULL,
+Fat INT NOT NULL,
+BMI DEC(5,5) NOT NULL,
+IsManualReport TEXT NOT NULL,
+LogId INT NOT NULL
+);

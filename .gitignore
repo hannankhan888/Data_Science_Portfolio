@@ -3,5 +3,9 @@
 
 # for RStudio
 .Rproj.user
-.Rproj
+*.Rproj
 .RData
+.RHistory
+
+# for environment vars
+*.env
