@@ -1,0 +1,66 @@
+-- combining minuteCaloriesNarrow_merged and minuteIntensitiesNarrow_merged into minute
+
+CREATE TABLE IF NOT EXISTS minute AS
+	SELECT
+		c.*,
+		n.Intensity
+	FROM
+		minuteCaloriesNarrow_merged AS c
+	JOIN
+		minuteIntensitiesNarrow_merged as n
+	ON
+		c.Id = n.Id AND
+		c.ActivityMinute = n.ActivityMinute;
+
+
+-- combining minute and minuteMETsNarrow_merged into minute2
+
+CREATE TABLE IF NOT EXISTS minute2 AS
+	SELECT
+		m.*,
+		e.METs
+	FROM
+		minute AS m
+	JOIN
+		minuteMETsNarrow_merged AS e
+	ON
+		m.Id = e.Id AND
+		m.ActivityMinute = e.ActivityMinute;
+
+
+-- combining minute2 and minuteStepsNarrow_merged into minute3
+CREATE TABLE IF NOT EXISTS minute3 AS
+	SELECT
+		m.*,
+		s.Steps
+	FROM
+		minute2 AS m
+	JOIN
+		minuteStepsNarrow_merged AS s
+	ON
+		m.Id = s.Id AND
+		m.ActivityMinute = s.ActivityMinute;
+
+
+-- combining minute3 and minuteSleep_merged into minute4
+CREATE TABLE IF NOT EXISTS minute4 AS
+	SELECT
+		m.*,
+		s.value,
+		s.logId
+	FROM
+		minute3 AS m
+	JOIN
+		minuteSleep_merged AS s
+	ON
+		m.Id = s.Id AND
+		m.ActivityMinute = s.date;
+
+
+-- deleting temp tables
+DROP TABLE IF EXISTS minute;
+DROP TABLE IF EXISTS minute2;
+DROP TABLE IF EXISTS minute3;
+
+-- rename minute4 to minuteNarrow
+ALTER TABLE minute4 RENAME TO minuteNarrow;

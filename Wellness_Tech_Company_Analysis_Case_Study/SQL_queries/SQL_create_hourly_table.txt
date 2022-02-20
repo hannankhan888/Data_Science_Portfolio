@@ -1,0 +1,35 @@
+-- combining hourlyCalories_merged and hourlyIntensities_merged into hourly
+
+CREATE TABLE IF NOT EXISTS hourly AS
+	SELECT
+		c.*,
+		i.AverageIntensity,
+		i.TotalIntensity
+	FROM
+		hourlyCalories_merged AS c
+	JOIN
+		hourlyIntensities_merged AS i
+	ON
+		c.Id = i.Id AND
+		c.ActivityHour = i.ActivityHour;
+
+
+-- combining hourly and hourlySteps_merged into hourly2
+
+CREATE TABLE IF NOT EXISTS hourly2 AS
+SELECT
+	h.*,
+	s.StepTotal
+FROM
+	hourly AS h
+JOIN
+	hourlySteps_merged AS s
+ON
+	h.Id = s.Id AND
+	h.ActivityHour = s.ActivityHour;
+
+-- deleting temp tables
+DROP TABLE IF EXISTS hourly;
+
+-- renaming hourly2 to hourly
+ALTER TABLE hourly2 RENAME TO hourly;
