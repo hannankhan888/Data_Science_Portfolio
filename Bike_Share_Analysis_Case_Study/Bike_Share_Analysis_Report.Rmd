@@ -235,6 +235,7 @@ df %>%
   datatable(caption = "Table 1: Basic Statistics Of Each Member Type",
             class = "hover",
             options = list(
+              scrollX = TRUE,
               initComplete = JS(
                 "function(settings, json) {",
                 "$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});",

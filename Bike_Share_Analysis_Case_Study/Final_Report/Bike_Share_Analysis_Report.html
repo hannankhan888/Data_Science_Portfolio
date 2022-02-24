@@ -4110,9 +4110,9 @@ div.tocify {
 <pre><code>## New names:
 ## * `` -&gt; ...1</code></pre>
 <pre><code>## Rows: 5595063 Columns: 14
-## -- Column specification -------------------------------------------------------------------------------------------------
+## -- Column specification --------------------------------------------------------
 ## Delimiter: &quot;,&quot;
-## chr  (7): ride_id, rideable_type, start_station_name, start_station_id, end_station_name, end_station_id, member_casual
+## chr  (7): ride_id, rideable_type, start_station_name, start_station_id, end_...
 ## dbl  (5): ...1, start_lat, start_lng, end_lat, end_lng
 ## dttm (2): started_at, ended_at
 ## 
@@ -4123,8 +4123,8 @@ div.tocify {
 ##  $ ...1              : num [1:5595063] 0 1 2 3 4 5 6 7 8 9 ...
 ##  $ ride_id           : chr [1:5595063] &quot;E19E6F1B8D4C42ED&quot; &quot;DC88F20C2C55F27F&quot; &quot;EC45C94683FE3F27&quot; &quot;4FA453A75AE377DB&quot; ...
 ##  $ rideable_type     : chr [1:5595063] &quot;electric_bike&quot; &quot;electric_bike&quot; &quot;electric_bike&quot; &quot;electric_bike&quot; ...
-##  $ started_at        : POSIXct[1:5595063], format: &quot;2021-01-23 16:14:19&quot; &quot;2021-01-27 18:43:08&quot; &quot;2021-01-21 22:35:54&quot; &quot;2021-01-07 13:31:13&quot; ...
-##  $ ended_at          : POSIXct[1:5595063], format: &quot;2021-01-23 16:24:44&quot; &quot;2021-01-27 18:47:12&quot; &quot;2021-01-21 22:37:14&quot; &quot;2021-01-07 13:42:55&quot; ...
+##  $ started_at        : POSIXct[1:5595063], format: &quot;2021-01-23 16:14:19&quot; &quot;2021-01-27 18:43:08&quot; ...
+##  $ ended_at          : POSIXct[1:5595063], format: &quot;2021-01-23 16:24:44&quot; &quot;2021-01-27 18:47:12&quot; ...
 ##  $ start_station_name: chr [1:5595063] &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; ...
 ##  $ start_station_id  : chr [1:5595063] &quot;17660&quot; &quot;17660&quot; &quot;17660&quot; &quot;17660&quot; ...
 ##  $ end_station_name  : chr [1:5595063] NA NA NA NA ...
@@ -4161,25 +4161,29 @@ df$Member_Type[df$Member_Type==&quot;casual&quot;] &lt;- &quot;Casual&quot;
 df$Member_Type[df$Member_Type==&quot;member&quot;] &lt;- &quot;Member&quot;
 
 colnames(df)</code></pre>
-<pre><code>##  [1] &quot;index&quot;              &quot;ride_id&quot;            &quot;rideable_type&quot;      &quot;started_at&quot;         &quot;ended_at&quot;          
-##  [6] &quot;start_station_name&quot; &quot;start_station_id&quot;   &quot;end_station_name&quot;   &quot;end_station_id&quot;     &quot;start_lat&quot;         
-## [11] &quot;start_lng&quot;          &quot;end_lat&quot;            &quot;end_lng&quot;            &quot;Member_Type&quot;</code></pre>
+<pre><code>##  [1] &quot;index&quot;              &quot;ride_id&quot;            &quot;rideable_type&quot;     
+##  [4] &quot;started_at&quot;         &quot;ended_at&quot;           &quot;start_station_name&quot;
+##  [7] &quot;start_station_id&quot;   &quot;end_station_name&quot;   &quot;end_station_id&quot;    
+## [10] &quot;start_lat&quot;          &quot;start_lng&quot;          &quot;end_lat&quot;           
+## [13] &quot;end_lng&quot;            &quot;Member_Type&quot;</code></pre>
 <pre class="r"><code>clean_names(df)</code></pre>
 <pre><code>## # A tibble: 5,595,063 x 14
-##    index ride_id rideable_type started_at          ended_at            start_station_n~ start_station_id end_station_name
-##    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-##  1     0 E19E6F~ electric_bike 2021-01-23 16:14:19 2021-01-23 16:24:44 California Ave ~ 17660            &lt;NA&gt;            
-##  2     1 DC88F2~ electric_bike 2021-01-27 18:43:08 2021-01-27 18:47:12 California Ave ~ 17660            &lt;NA&gt;            
-##  3     2 EC45C9~ electric_bike 2021-01-21 22:35:54 2021-01-21 22:37:14 California Ave ~ 17660            &lt;NA&gt;            
-##  4     3 4FA453~ electric_bike 2021-01-07 13:31:13 2021-01-07 13:42:55 California Ave ~ 17660            &lt;NA&gt;            
-##  5     4 BE5E8E~ electric_bike 2021-01-23 02:24:02 2021-01-23 02:24:45 California Ave ~ 17660            &lt;NA&gt;            
-##  6     5 5D8969~ electric_bike 2021-01-09 14:24:07 2021-01-09 15:17:54 California Ave ~ 17660            &lt;NA&gt;            
-##  7     6 09275C~ electric_bike 2021-01-04 05:05:04 2021-01-04 05:10:39 California Ave ~ 17660            &lt;NA&gt;            
-##  8     7 DF7A32~ electric_bike 2021-01-14 15:07:00 2021-01-14 15:13:40 California Ave ~ 17660            &lt;NA&gt;            
-##  9     8 C2EFC6~ electric_bike 2021-01-09 09:57:55 2021-01-09 10:00:26 California Ave ~ 17660            &lt;NA&gt;            
-## 10     9 B9F734~ classic_bike  2021-01-24 19:15:38 2021-01-24 19:22:51 California Ave ~ 17660            Wood St &amp; Augus~
-## # ... with 5,595,053 more rows, and 6 more variables: end_station_id &lt;chr&gt;, start_lat &lt;dbl&gt;, start_lng &lt;dbl&gt;,
-## #   end_lat &lt;dbl&gt;, end_lng &lt;dbl&gt;, member_type &lt;chr&gt;</code></pre>
+##    index ride_id          rideable_type started_at          ended_at           
+##    &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;             
+##  1     0 E19E6F1B8D4C42ED electric_bike 2021-01-23 16:14:19 2021-01-23 16:24:44
+##  2     1 DC88F20C2C55F27F electric_bike 2021-01-27 18:43:08 2021-01-27 18:47:12
+##  3     2 EC45C94683FE3F27 electric_bike 2021-01-21 22:35:54 2021-01-21 22:37:14
+##  4     3 4FA453A75AE377DB electric_bike 2021-01-07 13:31:13 2021-01-07 13:42:55
+##  5     4 BE5E8EB4E7263A0B electric_bike 2021-01-23 02:24:02 2021-01-23 02:24:45
+##  6     5 5D8969F88C773979 electric_bike 2021-01-09 14:24:07 2021-01-09 15:17:54
+##  7     6 09275CC10F854E9E electric_bike 2021-01-04 05:05:04 2021-01-04 05:10:39
+##  8     7 DF7A32A217AEFB14 electric_bike 2021-01-14 15:07:00 2021-01-14 15:13:40
+##  9     8 C2EFC62379EB716C electric_bike 2021-01-09 09:57:55 2021-01-09 10:00:26
+## 10     9 B9F73448DFBE0D45 classic_bike  2021-01-24 19:15:38 2021-01-24 19:22:51
+## # ... with 5,595,053 more rows, and 9 more variables: start_station_name &lt;chr&gt;,
+## #   start_station_id &lt;chr&gt;, end_station_name &lt;chr&gt;, end_station_id &lt;chr&gt;,
+## #   start_lat &lt;dbl&gt;, start_lng &lt;dbl&gt;, end_lat &lt;dbl&gt;, end_lng &lt;dbl&gt;,
+## #   member_type &lt;chr&gt;</code></pre>
 <p>Lets make sure our datetime columns are formatted as such:</p>
 <pre class="r"><code>df[[&quot;started_at&quot;]] &lt;- as.POSIXct(df[[&quot;started_at&quot;]],
                                  format = &quot;%Y-%m-%d %H:%M:%S&quot;)
@@ -4231,10 +4235,12 @@ sapply(df, class)</code></pre>
 ## [1] &quot;character&quot;</code></pre>
 <p>We look at null values for our data frame by column:</p>
 <pre class="r"><code>colSums(is.na.data.frame(df))</code></pre>
-<pre><code>##              index            ride_id      rideable_type         started_at           ended_at start_station_name 
-##                  0                  0                  0                  0                  0             690809 
-##   start_station_id   end_station_name     end_station_id          start_lat          start_lng            end_lat 
-##             690806             739170             739170                  0                  0               4771 
+<pre><code>##              index            ride_id      rideable_type         started_at 
+##                  0                  0                  0                  0 
+##           ended_at start_station_name   start_station_id   end_station_name 
+##                  0             690809             690806             739170 
+##     end_station_id          start_lat          start_lng            end_lat 
+##             739170                  0                  0               4771 
 ##            end_lng        Member_Type 
 ##               4771                  0</code></pre>
 <p>We have a lot of null values in certain columns. Let’s get rid of the values in the largest column (end_station_name):</p>
@@ -4242,10 +4248,12 @@ sapply(df, class)</code></pre>
 
 # checking to see if na values are dropped:
 colSums(is.na.data.frame(df))</code></pre>
-<pre><code>##              index            ride_id      rideable_type         started_at           ended_at start_station_name 
-##                  0                  0                  0                  0                  0             267591 
-##   start_station_id   end_station_name     end_station_id          start_lat          start_lng            end_lat 
-##             267590                  0                  0                  0                  0                  0 
+<pre><code>##              index            ride_id      rideable_type         started_at 
+##                  0                  0                  0                  0 
+##           ended_at start_station_name   start_station_id   end_station_name 
+##                  0             267591             267590                  0 
+##     end_station_id          start_lat          start_lng            end_lat 
+##                  0                  0                  0                  0 
 ##            end_lng        Member_Type 
 ##                  0                  0</code></pre>
 <p>We still have around 270k null values, so we keep cleaning:</p>
@@ -4253,10 +4261,12 @@ colSums(is.na.data.frame(df))</code></pre>
 
 # check again to see if na values are dropped:
 colSums(is.na.data.frame(df))</code></pre>
-<pre><code>##              index            ride_id      rideable_type         started_at           ended_at start_station_name 
-##                  0                  0                  0                  0                  0                  0 
-##   start_station_id   end_station_name     end_station_id          start_lat          start_lng            end_lat 
-##                  0                  0                  0                  0                  0                  0 
+<pre><code>##              index            ride_id      rideable_type         started_at 
+##                  0                  0                  0                  0 
+##           ended_at start_station_name   start_station_id   end_station_name 
+##                  0                  0                  0                  0 
+##     end_station_id          start_lat          start_lng            end_lat 
+##                  0                  0                  0                  0 
 ##            end_lng        Member_Type 
 ##                  0                  0</code></pre>
 <p>Great! Now the data frame is free of null values.<br />
@@ -4264,9 +4274,11 @@ We can proceed to check for duplicates in the data. Since the ride_id is a prima
 <pre class="r"><code>get_dupes(df, ride_id)</code></pre>
 <pre><code>## No duplicate combinations found of: ride_id</code></pre>
 <pre><code>## # A tibble: 0 x 15
-## # ... with 15 variables: ride_id &lt;chr&gt;, dupe_count &lt;int&gt;, index &lt;dbl&gt;, rideable_type &lt;chr&gt;, started_at &lt;dttm&gt;,
-## #   ended_at &lt;dttm&gt;, start_station_name &lt;chr&gt;, start_station_id &lt;chr&gt;, end_station_name &lt;chr&gt;, end_station_id &lt;chr&gt;,
-## #   start_lat &lt;dbl&gt;, start_lng &lt;dbl&gt;, end_lat &lt;dbl&gt;, end_lng &lt;dbl&gt;, Member_Type &lt;chr&gt;</code></pre>
+## # ... with 15 variables: ride_id &lt;chr&gt;, dupe_count &lt;int&gt;, index &lt;dbl&gt;,
+## #   rideable_type &lt;chr&gt;, started_at &lt;dttm&gt;, ended_at &lt;dttm&gt;,
+## #   start_station_name &lt;chr&gt;, start_station_id &lt;chr&gt;, end_station_name &lt;chr&gt;,
+## #   end_station_id &lt;chr&gt;, start_lat &lt;dbl&gt;, start_lng &lt;dbl&gt;, end_lat &lt;dbl&gt;,
+## #   end_lng &lt;dbl&gt;, Member_Type &lt;chr&gt;</code></pre>
 <p>Now our data is:</p>
 <ul>
 <li>Correctly named</li>
@@ -4309,8 +4321,8 @@ df &lt;- df %&gt;%
 ##  $ index             : num [1:4588302] 9 10 11 12 13 14 15 16 17 18 ...
 ##  $ ride_id           : chr [1:4588302] &quot;B9F73448DFBE0D45&quot; &quot;457C7F4B5D3DA135&quot; &quot;57C750326F9FDABE&quot; &quot;4D518C65E338D070&quot; ...
 ##  $ rideable_type     : chr [1:4588302] &quot;classic_bike&quot; &quot;electric_bike&quot; &quot;electric_bike&quot; &quot;electric_bike&quot; ...
-##  $ started_at        : POSIXct[1:4588302], format: &quot;2021-01-24 19:15:38&quot; &quot;2021-01-23 12:57:38&quot; &quot;2021-01-09 15:28:04&quot; &quot;2021-01-09 15:28:57&quot; ...
-##  $ ended_at          : POSIXct[1:4588302], format: &quot;2021-01-24 19:22:51&quot; &quot;2021-01-23 13:02:10&quot; &quot;2021-01-09 15:37:51&quot; &quot;2021-01-09 15:37:54&quot; ...
+##  $ started_at        : POSIXct[1:4588302], format: &quot;2021-01-24 19:15:38&quot; &quot;2021-01-23 12:57:38&quot; ...
+##  $ ended_at          : POSIXct[1:4588302], format: &quot;2021-01-24 19:22:51&quot; &quot;2021-01-23 13:02:10&quot; ...
 ##  $ start_station_name: chr [1:4588302] &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; &quot;California Ave &amp; Cortez St&quot; ...
 ##  $ start_station_id  : chr [1:4588302] &quot;17660&quot; &quot;17660&quot; &quot;17660&quot; &quot;17660&quot; ...
 ##  $ end_station_name  : chr [1:4588302] &quot;Wood St &amp; Augusta Blvd&quot; &quot;California Ave &amp; North Ave&quot; &quot;Wood St &amp; Augusta Blvd&quot; &quot;Wood St &amp; Augusta Blvd&quot; ...
@@ -4324,12 +4336,16 @@ df &lt;- df %&gt;%
 ##  $ weekday           : chr [1:4588302] &quot;Sunday&quot; &quot;Saturday&quot; &quot;Saturday&quot; &quot;Saturday&quot; ...
 ##  $ time_of_day       : chr [1:4588302] &quot;Evening&quot; &quot;Afternoon&quot; &quot;Afternoon&quot; &quot;Afternoon&quot; ...</code></pre>
 <pre class="r"><code>colSums(is.na.data.frame(df))</code></pre>
-<pre><code>##              index            ride_id      rideable_type         started_at           ended_at start_station_name 
-##                  0                  0                  0                  0                  0                  0 
-##   start_station_id   end_station_name     end_station_id          start_lat          start_lng            end_lat 
-##                  0                  0                  0                  0                  0                  0 
-##            end_lng        Member_Type        ride_length            weekday        time_of_day 
-##                  0                  0                  0                  0                  0</code></pre>
+<pre><code>##              index            ride_id      rideable_type         started_at 
+##                  0                  0                  0                  0 
+##           ended_at start_station_name   start_station_id   end_station_name 
+##                  0                  0                  0                  0 
+##     end_station_id          start_lat          start_lng            end_lat 
+##                  0                  0                  0                  0 
+##            end_lng        Member_Type        ride_length            weekday 
+##                  0                  0                  0                  0 
+##        time_of_day 
+##                  0</code></pre>
 </div>
 <div id="analysis" class="section level2">
 <h2>Analysis</h2>
@@ -4353,14 +4369,15 @@ df %&gt;%
   datatable(caption = &quot;Table 1: Basic Statistics Of Each Member Type&quot;,
             class = &quot;hover&quot;,
             options = list(
+              scrollX = TRUE,
               initComplete = JS(
                 &quot;function(settings, json) {&quot;,
                 &quot;$(this.api().table().header()).css({&#39;background-color&#39;: &#39;#3288bd&#39;, &#39;color&#39;: &#39;white&#39;});&quot;,
                 &quot;}&quot;)
               )) %&gt;%
   formatRound(c(&quot;mean_ride_len_s&quot;, &quot;mean_ride_len_m&quot;, &quot;max_ride_len_m&quot;), 1)</code></pre>
-<div id="htmlwidget-11b12a8ca67b12b21893" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-11b12a8ca67b12b21893">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1: Basic Statistics Of Each Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[2048379,2539923],[1950.511407801,790.983923922103],[32.5085234633499,13.1830653987017],[3356649,89738],[55944.15,1495.63333333333],["Saturday","Wednesday"]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>count<\/th>\n      <th>mean_ride_len_s<\/th>\n      <th>mean_ride_len_m<\/th>\n      <th>max_ride_len_s<\/th>\n      <th>max_ride_len_m<\/th>\n      <th>most_common_wkday<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete","options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render"],"jsHooks":[]}</script>
+<div id="htmlwidget-b12d40599fd32778422c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b12d40599fd32778422c">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1: Basic Statistics Of Each Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[2048379,2539923],[1950.511407801,790.983923922103],[32.5085234633499,13.1830653987017],[3356649,89738],[55944.15,1495.63333333333],["Saturday","Wednesday"]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>count<\/th>\n      <th>mean_ride_len_s<\/th>\n      <th>mean_ride_len_m<\/th>\n      <th>max_ride_len_s<\/th>\n      <th>max_ride_len_m<\/th>\n      <th>most_common_wkday<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete","options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render"],"jsHooks":[]}</script>
 <p>From this table, we can conclude the following:</p>
 <ul>
 <li>Annual members have higher usage overall (already confirmed by finance analysts).</li>
@@ -4382,13 +4399,16 @@ df %&gt;%
                 &quot;$(this.api().table().header()).css({&#39;background-color&#39;: &#39;#3288bd&#39;, &#39;color&#39;: &#39;white&#39;});&quot;,
                 &quot;}&quot;)
             ))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Member_Type&#39;. You can override using the `.groups` argument.
-## Note: Using an external vector in selections is ambiguous. i Use `all_of(ordered_weekdays)` instead of
-## `ordered_weekdays` to silence this message. i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
-## This message is displayed once per session.
+<pre><code>## `summarise()` has grouped output by &#39;Member_Type&#39;. You can override using the
+## `.groups` argument.
+## Note: Using an external vector in selections is ambiguous. i Use
+## `all_of(ordered_weekdays)` instead of `ordered_weekdays` to silence this
+## message. i See
+## &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;. This message
+## is displayed once per session.
 ## Adding missing grouping variables: `Member_Type`</code></pre>
-<div id="htmlwidget-32c74516ad66b50fe6a0" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-32c74516ad66b50fe6a0">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2: Number Of Rides Per Day By Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[403789,311240],[228936,346488],[214937,388132],[218134,397720],[224207,373474],[290045,365787],[468331,357082]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>Sunday<\/th>\n      <th>Monday<\/th>\n      <th>Tuesday<\/th>\n      <th>Wednesday<\/th>\n      <th>Thursday<\/th>\n      <th>Friday<\/th>\n      <th>Saturday<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script>
+<div id="htmlwidget-d9309039350380721e7e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d9309039350380721e7e">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2: Number Of Rides Per Day By Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[403789,311240],[228936,346488],[214937,388132],[218134,397720],[224207,373474],[290045,365787],[468331,357082]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>Sunday<\/th>\n      <th>Monday<\/th>\n      <th>Tuesday<\/th>\n      <th>Wednesday<\/th>\n      <th>Thursday<\/th>\n      <th>Friday<\/th>\n      <th>Saturday<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script>
 <pre class="r"><code>ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
   geom_bar() +
   facet_wrap(~Member_Type) +
@@ -4425,10 +4445,11 @@ df %&gt;%
                 &quot;}&quot;)
             )) %&gt;%
   formatRound(ordered_weekdays, 1)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Member_Type&#39;. You can override using the `.groups` argument.
+<pre><code>## `summarise()` has grouped output by &#39;Member_Type&#39;. You can override using the
+## `.groups` argument.
 ## Adding missing grouping variables: `Member_Type`</code></pre>
-<div id="htmlwidget-aac2818dd415f104c4d1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-aac2818dd415f104c4d1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 3: Average Ride Length By Weekday Based On Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[2255.89852621047,911.453033029174],[1958.19170859978,763.485575258018],[1728.16014460051,743.258115795657],[1696.13918050373,747.408601528714],[1680.63766519333,741.211613124341],[1855.07317140444,767.528777676626],[2092.28603701228,889.157409222531]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>Sunday<\/th>\n      <th>Monday<\/th>\n      <th>Tuesday<\/th>\n      <th>Wednesday<\/th>\n      <th>Thursday<\/th>\n      <th>Friday<\/th>\n      <th>Saturday<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete","options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render","options.columnDefs.5.render","options.columnDefs.6.render"],"jsHooks":[]}</script>
+<div id="htmlwidget-be9ec1053e88b141f185" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-be9ec1053e88b141f185">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 3: Average Ride Length By Weekday Based On Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[2255.89852621047,911.453033029174],[1958.19170859978,763.485575258018],[1728.16014460051,743.258115795657],[1696.13918050373,747.408601528714],[1680.63766519333,741.211613124341],[1855.07317140444,767.528777676626],[2092.28603701228,889.157409222531]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>Sunday<\/th>\n      <th>Monday<\/th>\n      <th>Tuesday<\/th>\n      <th>Wednesday<\/th>\n      <th>Thursday<\/th>\n      <th>Friday<\/th>\n      <th>Saturday<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete","options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render","options.columnDefs.5.render","options.columnDefs.6.render"],"jsHooks":[]}</script>
 <pre class="r"><code>ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
   geom_bar(stat = &quot;summary&quot;, fun = &quot;mean&quot;, fill = &quot;#3288bd&quot;) +
   facet_wrap(~Member_Type) +
@@ -4459,10 +4480,11 @@ df %&gt;%
                 &quot;$(this.api().table().header()).css({&#39;background-color&#39;: &#39;#3288bd&#39;, &#39;color&#39;: &#39;white&#39;});&quot;,
                 &quot;}&quot;)
             ))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Member_Type&#39;. You can override using the `.groups` argument.
+<pre><code>## `summarise()` has grouped output by &#39;Member_Type&#39;. You can override using the
+## `.groups` argument.
 ## Adding missing grouping variables: `Member_Type`</code></pre>
-<div id="htmlwidget-9e68100ab1f4f2b4a74a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9e68100ab1f4f2b4a74a">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 4: Time Of Day Usage Based On Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[482093,779520],[939144,1088718],[627142,671685]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>Morning<\/th>\n      <th>Afternoon<\/th>\n      <th>Evening<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script>
+<div id="htmlwidget-95d9c40c29ff9f1ad806" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-95d9c40c29ff9f1ad806">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 4: Time Of Day Usage Based On Member Type<\/caption>","data":[["1","2"],["Casual","Member"],[482093,779520],[939144,1088718],[627142,671685]],"container":"<table class=\"hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Member_Type<\/th>\n      <th>Morning<\/th>\n      <th>Afternoon<\/th>\n      <th>Evening<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});\n}","columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script>
 <pre class="r"><code>ggplot(df, mapping = aes(x = time_of_day)) +
   geom_bar(fill = &quot;#3288bd&quot;) +
   facet_wrap(~Member_Type) +
