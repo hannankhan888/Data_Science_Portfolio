@@ -1,4 +1,6 @@
 library(tidyverse)
+library(DT)
+
 
 # we load the csv data from 2021:
 df <- read_csv("D:\\Datasets\\Divvy_Trips_Data\\Divvy_Trips_2021\\2021_all_data.csv")
@@ -14,6 +16,13 @@ colnames(df)
 
 # one of the columns "..1" is incorrectly labeled, let's rename it:
 df <- rename(df, index = "...1")
+
+# let's rename 'member_casual' to Member_Type:
+df <- rename(df, Member_Type = "member_casual")
+
+# let's convert the member types to uppercase:
+df$Member_Type[df$Member_Type=="casual"] <- "Casual"
+df$Member_Type[df$Member_Type=="member"] <- "Member"
 
 # check to see the column has been renamed:
 colnames(df)
@@ -96,9 +105,9 @@ str(df)
 library(lubridate)
 get_time_of_day <- function(start_time) {
   hour_time <- hour(start_time)
-  case_when(hour_time >= 0 & hour_time <= 11 ~ 'morning',
-            hour_time >= 12 & hour_time <= 17 ~ 'afternoon',
-            hour_time >= 18 & hour_time <= 23 ~ 'evening')
+  case_when(hour_time >= 0 & hour_time <= 11 ~ 'Morning',
+            hour_time >= 12 & hour_time <= 17 ~ 'Afternoon',
+            hour_time >= 18 & hour_time <= 23 ~ 'Evening')
 }
 df <- df %>%
   mutate(time_of_day = get_time_of_day(started_at))
@@ -136,28 +145,42 @@ mode_calc <- function (v) {
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 df %>%
-  group_by(member_casual) %>%
+  group_by(Member_Type) %>%
   summarize(count = n(),
             mean_ride_len_s = mean(ride_length),
             mean_ride_len_m = mean(ride_length)/60,
             max_ride_len_s = max(ride_length),
             max_ride_len_m = max(ride_length)/60,
             most_common_wkday = mode_calc(weekday)) %>%
-  datatable() %>%
+  datatable(caption = "Table 1: Basic Statistics Of Each Member Type",
+            class = "hover",
+            options = list(
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});",
+                "}")
+              )) %>%
   formatRound(c("mean_ride_len_s", "mean_ride_len_m", "max_ride_len_m"), 1)
 
 # calculate most common days of week by member type:
 # (number of rides per day by member type)
 df %>%
-  group_by(member_casual, weekday) %>%
+  group_by(Member_Type, weekday) %>%
   summarize(observations = n()) %>%
   pivot_wider(names_from = weekday, values_from = observations) %>%
   select(ordered_weekdays) %>%
-  datatable()
+  datatable(caption = "Table 2: Number Of Rides Per Day By Member Type",
+            class = "hover",
+            options = list(
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});",
+                "}")
+            ))
 
 ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
   geom_bar() +
-  facet_wrap(~member_casual) +
+  facet_wrap(~Member_Type) +
   labs(x = "Weekday",
        y = "Count",
        title = "Number Of Rides Per Day By Member Type") +
@@ -170,16 +193,23 @@ ggplot(df, mapping=aes(x=weekday, fill=rideable_type)) +
 
 # average ride length by day of week:
 df %>%
-  group_by(member_casual, weekday) %>%
+  group_by(Member_Type, weekday) %>%
   summarize(avg_ride_len = mean(ride_length)) %>%
   pivot_wider(names_from = weekday, values_from = avg_ride_len) %>%
   select(ordered_weekdays) %>%
-  datatable() %>%
+  datatable(caption = "Table 3: Average Ride Length By Weekday Based On Member Type",
+            class = "hover",
+            options = list(
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});",
+                "}")
+            )) %>%
   formatRound(ordered_weekdays, 1)
 
 ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
   geom_bar(stat = "summary", fun = "mean", fill = "#3288bd") +
-  facet_wrap(~member_casual) +
+  facet_wrap(~Member_Type) +
   labs(x = "Weekday",
        y = "Average Ride Length",
        title = "Average Ride Length By Weekday Based On Member Type") +
@@ -191,26 +221,28 @@ ggplot(df,mapping = aes(x = weekday, y = ride_length)) +
 
 # what is the most popular time of day for different members?
 df %>%
-  group_by(member_casual, time_of_day) %>%
+  group_by(Member_Type, time_of_day) %>%
   summarize(observations = n()) %>%
   pivot_wider(names_from = time_of_day, values_from = observations) %>%
-  select(c("morning", "afternoon", "evening")) %>%
-  datatable()
+  select(c("Morning", "Afternoon", "Evening")) %>%
+  datatable(caption = "Table 4: Time Of Day Usage Based On Member Type",
+            class = "hover",
+            options = list(
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().header()).css({'background-color': '#3288bd', 'color': 'white'});",
+                "}")
+            ))
 
 ggplot(df, mapping = aes(x = time_of_day)) +
   geom_bar(fill = "#3288bd") +
-  facet_wrap(~member_casual) +
+  facet_wrap(~Member_Type) +
   labs(x = "Time Of Day",
        y = "Count",
        title = "Time Of Day Based On Member Type") +
-  scale_x_discrete(limits = c("morning", "afternoon", "evening")) +
+  scale_x_discrete(limits = c("Morning", "Afternoon", "Evening")) +
   scale_y_continuous(labels = label_number_si()) +
   theme_minimal()
-
-install.packages('DT')
-library(DT)
-
-
 
 
 
