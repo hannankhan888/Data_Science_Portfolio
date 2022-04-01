@@ -1,3 +1,6 @@
+# for pycharms folder
+.idea/
+
 # for jupyter notebook checkpoints
 *.ipynb_checkpoints
 
@@ -11,7 +14,7 @@
 *.env
 
 # for ongoing projects
-Decision_Trees_Employee_Attrition/
+
 
 # for data folder
 data/
