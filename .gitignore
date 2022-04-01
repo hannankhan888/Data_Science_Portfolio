@@ -11,7 +11,7 @@
 *.env
 
 # for ongoing projects
-Linear_Regression_On_Employee_Attrition/
+Decision_Trees_Employee_Attrition/
 
 # for data folder
 data/
