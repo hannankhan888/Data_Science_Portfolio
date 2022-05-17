@@ -13,8 +13,7 @@
 # for environment vars
 *.env
 
-# for ongoing projects
-
-
 # for data folder
 data/
+
+# for ongoing projects
